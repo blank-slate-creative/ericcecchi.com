@@ -67,18 +67,19 @@ export default function Security() {
         <p className="sm:text-lg leading-relaxed">
           I lead security engineering in my full-time role. Day to day, that
           means writing security policies, running vendor security assessments,
-          and answering enterprise security reviews. This page covers the same
-          kind of paperwork, done for other small companies through Blank Slate
-          Creative, and where that work stops.
+          and answering enterprise security reviews. Through Blank Slate
+          Creative, I do that kind of paperwork for other small companies. This
+          page covers that work, and where it stops.
         </p>
 
         <h2 className="text-2xl font-bold mt-12">
           Both sides of the paperwork
         </h2>
         <p className="sm:text-lg leading-relaxed">
-          A security questionnaire has two sides, and I work on both. I assess
-          what vendors send, and I answer what customers ask. I write the
-          documents with the reader on the other end in mind.
+          A security questionnaire has two sides, and at work I handle both. I
+          assess what vendors send, and I answer what customers ask. The
+          documents I write for Blank Slate Creative are written with the reader
+          on the other end in mind.
         </p>
 
         <h2 className="text-2xl font-bold mt-12">Blank Slate Creative</h2>
