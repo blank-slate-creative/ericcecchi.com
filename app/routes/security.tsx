@@ -65,11 +65,11 @@ export default function Security() {
         </PageTitle>
 
         <p className="sm:text-lg leading-relaxed">
-          I lead security engineering in my full-time role. Day to day, that
-          means writing security policies, running vendor security assessments,
-          and answering enterprise security reviews. Through Blank Slate
-          Creative, I do that kind of paperwork for other small companies. This
-          page covers that work, and where it stops.
+          I lead security engineering in my full-time role. In that role I write
+          security policies, run vendor security assessments, and answer
+          enterprise security reviews. Through Blank Slate Creative, I offer
+          that kind of paperwork to other small companies. This page covers that
+          work, and where it stops.
         </p>
 
         <h2 className="text-2xl font-bold mt-12">
@@ -97,12 +97,12 @@ export default function Security() {
           custom deliverable before it goes out.
         </p>
 
-        <h2 className="text-2xl font-bold mt-12">What I don’t do</h2>
+        <h2 className="text-2xl font-bold mt-12">Where the practice stops</h2>
         <ul className="list-disc pl-8 leading-relaxed space-y-2">
           <li className="sm:text-lg">
-            <strong>No audits or attestations.</strong> Readiness and
-            documentation work only. A SOC 2 report comes from an independent
-            CPA firm.
+            <strong>No audits or attestations.</strong> Blank Slate Creative
+            does readiness and documentation work only. A SOC 2 report comes
+            from an independent CPA firm.
           </li>
           <li className="sm:text-lg">
             <strong>No promised outcomes.</strong> A customer or an auditor
