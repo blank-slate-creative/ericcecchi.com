@@ -113,8 +113,8 @@ function replaceAll(value, pattern, replacement) {
 // The text is only compared and printed to a terminal, never put into a page.
 function visibleText(html) {
   let body = html.slice(html.toLowerCase().indexOf('<body'));
-  body = replaceAll(body, /<script\b[\s\S]*?<\/script\s*>/gi, ' ');
-  body = replaceAll(body, /<style\b[\s\S]*?<\/style\s*>/gi, ' ');
+  body = replaceAll(body, /<script\b[\s\S]*?<\/script\b[^>]*>/gi, ' ');
+  body = replaceAll(body, /<style\b[\s\S]*?<\/style\b[^>]*>/gi, ' ');
   body = replaceAll(body, /<!--[\s\S]*?--!?>/g, '');
   body = body.replace(
     /<(p|div|h[1-6]|li|header|footer|section|article|nav|br)\b[^>]*>/gi,
