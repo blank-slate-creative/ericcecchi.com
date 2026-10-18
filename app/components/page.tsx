@@ -1,4 +1,5 @@
 import React from 'react';
+import { ANALYTICS_LIVE } from '~/lib/analytics';
 import { cn } from '~/lib/classnames';
 import { Anchor } from './anchor';
 import { MainNav } from './main-nav';
@@ -13,12 +14,20 @@ export function Page({ className, ...props }: React.ComponentProps<'div'>) {
           I also run Blank Slate Creative, a security documentation practice.{' '}
           <Anchor to="/security">About my security work</Anchor>.
         </p>
-        <p>
-          What this site collects: anonymous page-view counts and page-speed
-          measurements through Vercel Analytics and Speed Insights, which are
-          not tied to you or your IP address. Fonts load from this site, not a
-          third party. I don’t collect names or emails.
-        </p>
+        {/* Follows the beacon's switch in app/lib/analytics.ts. */}
+        {ANALYTICS_LIVE ? (
+          <p>
+            What this site collects: anonymous page-view counts and page-speed
+            measurements through Cloudflare Web Analytics, which uses no cookies
+            and doesn’t identify you by your IP address. Fonts load from this
+            site, not a third party. I don’t collect names or emails.
+          </p>
+        ) : (
+          <p>
+            This site runs no analytics. Fonts load from this site, not a third
+            party. I don’t collect names or emails.
+          </p>
+        )}
       </footer>
     </div>
   );

@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 import { cn } from '~/lib/classnames';
-import { Link } from '@remix-run/react';
+import { Link } from 'react-router';
 
 type AnchorProps = ComponentProps<'a'> | ComponentProps<typeof Link>;
 

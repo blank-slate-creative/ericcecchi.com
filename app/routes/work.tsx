@@ -1,11 +1,11 @@
-import type { MetaFunction } from '@vercel/remix';
+import type { MetaFunction } from 'react-router';
 import { Anchor } from '~/components/anchor';
 import { Page } from '~/components/page';
 import { getTimelineComponent } from '~/components/timeline';
 import { PageTitle } from '~/components/page-title';
-import { useLoaderData } from '@remix-run/react';
+import { useLoaderData } from 'react-router';
 import { getTimeline } from '~/lib/timeline.server';
-import { cachedPageHeaders, pageMeta } from '~/lib/seo';
+import { pageMeta } from '~/lib/seo';
 
 export const meta: MetaFunction = () =>
   pageMeta({
@@ -14,8 +14,6 @@ export const meta: MetaFunction = () =>
       'Eric Cecchi’s career timeline: web development, engineering management at Sprout Social, platform architecture, and security engineering leadership.',
     path: '/work',
   });
-
-export const headers = cachedPageHeaders;
 
 export default function Work() {
   const { timeline } = useLoaderData<typeof loader>();

@@ -1,14 +1,18 @@
 import {
+  isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-} from '@remix-run/react';
-import { Analytics } from '@vercel/analytics/react';
+  useRouteError,
+} from 'react-router';
+import type { LinksFunction } from 'react-router';
 import { ReactNode } from 'react';
-import { SpeedInsights } from '@vercel/speed-insights/remix';
-import { LinksFunction } from '@vercel/remix';
+import { Analytics } from '~/components/analytics';
+import { NotFound } from '~/components/not-found';
+import { Page } from '~/components/page';
+import { PageTitle } from '~/components/page-title';
 import stylesheet from './global.css?url';
 // The body text font. Preloaded so text paints in Fira Mono without waiting on
 // the stylesheet; the other weights and subsets load as the page needs them.
@@ -43,7 +47,6 @@ export function Layout({ children }: { children: ReactNode }) {
         <ScrollRestoration />
         <Scripts />
         <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );
@@ -51,4 +54,24 @@ export function Layout({ children }: { children: ReactNode }) {
 
 export default function App() {
   return <Outlet />;
+}
+
+// A 404 met during client-side navigation shows the not-found page: for
+// example, a tab still open on an older build follows a link to a post that
+// a newer build removed, and its .data file is gone.
+export function ErrorBoundary() {
+  const error = useRouteError();
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return <NotFound />;
+  }
+  return (
+    <Page>
+      <div className="space-y-6">
+        <PageTitle>Something went wrong</PageTitle>
+        <p className="sm:text-lg leading-relaxed">
+          This page didn’t load. Reload it, or try again in a minute.
+        </p>
+      </div>
+    </Page>
+  );
 }

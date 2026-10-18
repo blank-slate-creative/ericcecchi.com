@@ -1,4 +1,4 @@
-import type { HeadersFunction, MetaDescriptor } from '@vercel/remix';
+import type { MetaDescriptor } from 'react-router';
 
 /*
  * Page metadata and structured data (blank-slate issue 935, phase 4 of the
@@ -147,19 +147,3 @@ export function jsonLdString(data: unknown): string {
     .replace(/\u2028/g, '\\u2028')
     .replace(/\u2029/g, '\\u2029');
 }
-
-/*
- * Edge caching for pages whose HTML is fixed at build time (all of them: posts
- * and the timeline are read into the bundle). The first request after a cold
- * start took 3.4 to 4.7 s on `/` (baseline, 2026-10-14). Vercel's CDN keys its
- * cache by deployment, so a deploy starts fresh and nothing stale outlives it;
- * stale-while-revalidate serves the cached copy while a background request
- * refreshes it. Vercel strips s-maxage and stale-while-revalidate before the
- * response reaches the browser, which still revalidates every time.
- * Error responses don't use this: a thrown 404 renders at the root, which has
- * no headers export, so it keeps Vercel's default.
- */
-export const cachedPageHeaders: HeadersFunction = () => ({
-  'Cache-Control':
-    'public, max-age=0, s-maxage=86400, stale-while-revalidate=31536000',
-});

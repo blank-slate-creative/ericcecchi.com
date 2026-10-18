@@ -1,0 +1,31 @@
+// Cloudflare Workers config for www.ericcecchi.com (blank-slate issue 1615;
+// plan: company/ops/ericcecchi-com-workers-move-plan.md in blank-slate).
+//
+// There is no Worker script: every page is pre-rendered at build time
+// (react-router.config.ts) and served from ./build/client as static assets.
+// Static asset requests are free and unlimited on the Free plan, and they
+// don't count toward the account's 100,000 Worker requests a day, which
+// blankslate.biz shares.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ericcecchi-com",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./build/client",
+    // /blog serves blog/index.html, and /blog/ answers 307 to /blog, so every
+    // URL matches its canonical (no trailing slash). The default,
+    // auto-trailing-slash, would send /blog to /blog/.
+    "html_handling": "drop-trailing-slash",
+    // Serve build/client/404.html, with a 404 status, for any path that has no
+    // file. scripts/postbuild.mjs writes it from the catch-all route.
+    "not_found_handling": "404-page"
+  },
+  // No routes yet. www.ericcecchi.com is attached as a Custom Domain at the DNS
+  // cutover (milestone M3), once its Vercel CNAME is gone.
+  "workers_dev": true,
+  "preview_urls": true,
+  // Required by `wrangler preview`, the PR preview deploy command (may be empty).
+  "previews": {},
+  // Off: nothing about a request is stored.
+  "observability": { "enabled": false }
+}

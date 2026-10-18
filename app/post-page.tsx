@@ -2,14 +2,9 @@ import { getPostBySlug } from '~/lib/posts.server';
 import { Page } from '~/components/page';
 import Post from '~/components/post';
 import { JsonLd } from '~/components/json-ld';
-import { LoaderFunctionArgs, MetaFunction } from '@vercel/remix';
-import { useLoaderData } from '@remix-run/react';
-import {
-  blogPostingLd,
-  cachedPageHeaders,
-  pageMeta,
-  plainText,
-} from '~/lib/seo';
+import { useLoaderData } from 'react-router';
+import type { LoaderFunctionArgs, MetaFunction } from 'react-router';
+import { blogPostingLd, pageMeta, plainText } from '~/lib/seo';
 
 // The date as written in the post's front matter (yyyy-MM-dd), with no time
 // the page doesn't show.
@@ -30,8 +25,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   });
 };
 
-export const headers = cachedPageHeaders;
-
 export default function PostPage() {
   const { post } = useLoaderData<typeof loader>();
 
@@ -50,14 +43,13 @@ export default function PostPage() {
   );
 }
 
-export async function loader({ params }: LoaderFunctionArgs) {
-  if (!params) {
-    throw new Response('Params are required', { status: 400 });
-  }
-  if (typeof params.slug !== 'string') {
-    throw new Response('Slug must be a string', { status: 400 });
-  }
-  const post = await getPostBySlug(params.slug);
+// One route per published post (app/routes.ts), so the slug comes from the
+// path, not a URL parameter. Every call is a pre-render at build time.
+export async function loader({ request }: LoaderFunctionArgs) {
+  const slug = new URL(request.url).pathname
+    .replace(/^\/blog\//, '')
+    .replace(/\/$/, '');
+  const post = await getPostBySlug(slug);
   if (!post) {
     throw new Response('Post not found', { status: 404 });
   }

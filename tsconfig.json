@@ -7,8 +7,7 @@
       "ESNext"
     ],
     "types": [
-      "@vercel/remix",
-      "node",
+      "@react-router/node",
       "vite/client"
     ],
     "allowJs": true,
@@ -23,6 +22,10 @@
     "jsx": "react-jsx",
     "incremental": true,
     "baseUrl": ".",
+    "rootDirs": [
+      ".",
+      "./.react-router/types"
+    ],
     "paths": {
       "~/*": [
         "./app/*"
@@ -35,7 +38,8 @@
     "types/*",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.mdx"
+    "**/*.mdx",
+    ".react-router/types/**/*"
   ],
   "exclude": [
     "node_modules"
