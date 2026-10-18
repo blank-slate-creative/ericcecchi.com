@@ -13,14 +13,20 @@ export function MainNav() {
             &gt; ./eric_cecchi
           </Anchor>
 
-          <ul className="flex-1 flex items-center ml-4 sm:ml-0 mt-2 sm:mt-0">
-            <li className="mr-6">
+          <ul className="flex-1 flex flex-wrap items-center gap-y-2 ml-4 sm:ml-0 mt-2 sm:mt-0">
+            <li className="mr-5 sm:mr-6">
               <Anchor className="no-underline hover:underline" to="/work">
                 ./work
               </Anchor>
             </li>
 
-            <li className="mr-6">
+            <li className="mr-5 sm:mr-6">
+              <Anchor className="no-underline hover:underline" to="/security">
+                ./security
+              </Anchor>
+            </li>
+
+            <li className="mr-5 sm:mr-6">
               <Anchor
                 href="https://managerreadme.com/readme/ericcecchi"
                 rel="noopener"
@@ -32,7 +38,7 @@ export function MainNav() {
               </Anchor>
             </li>
 
-            <li className="mr-6">
+            <li className="mr-5 sm:mr-6">
               <Anchor className="no-underline hover:underline" to="/blog">
                 ./blog
               </Anchor>
