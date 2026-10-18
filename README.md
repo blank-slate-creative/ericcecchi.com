@@ -60,8 +60,10 @@ the switch: empty means no beacon, and the footer's line in `app/components/page
   any sitemap URL lacks a page, or a post page is missing from the sitemap.
 - `wrangler.jsonc` serves `build/client`: `/blog` serves `blog/index.html`, `/blog/` redirects to
   `/blog`, and any path with no file gets `404.html` with a 404 status.
-- Cloudflare Workers Builds deploys `master` and posts a preview for each pull request.
-  `vercel.json` turns off Vercel's Git deployments.
+- Deploys: the target is Cloudflare Workers Builds deploying `master` and posting a preview for each
+  pull request. That isn't connected yet; connecting it is milestone M2 (blank-slate issue 1616), and
+  until then the Worker is deployed by hand with `npx wrangler deploy`. `vercel.json` turns off Vercel's
+  Git deployments.
 
 ## Develop
 
