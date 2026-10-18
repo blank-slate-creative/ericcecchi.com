@@ -1,4 +1,4 @@
-/* global console, process */
+/* global console, process, URL */
 // Runs after `react-router build` (package.json). Two jobs:
 //
 // 1. Move the pre-rendered catch-all page to build/client/404.html, which the
@@ -53,9 +53,9 @@ function pageFile(path) {
 }
 
 const paths = locs.map((loc) => {
-  if (!loc.startsWith(ORIGIN))
-    fail(`sitemap URL off the canonical host: ${loc}`);
-  return loc.slice(ORIGIN.length);
+  const url = new URL(loc);
+  if (url.origin !== ORIGIN) fail(`sitemap URL off the canonical host: ${loc}`);
+  return url.pathname;
 });
 const missing = paths.filter((path) => !existsSync(pageFile(path)));
 if (missing.length) fail(`no page for sitemap paths: ${missing.join(', ')}`);

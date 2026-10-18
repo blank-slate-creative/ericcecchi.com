@@ -1,4 +1,4 @@
-/* global console, process, fetch, URL */
+/* global console, process, fetch, URL, AbortSignal */
 // Compares the rendered <head> tags and the visible text of every sitemap URL
 // on two hosts: a reference (the live site) and a candidate (a preview, or
 // `npm start` locally). Used for the move to Cloudflare Workers (blank-slate
@@ -8,11 +8,12 @@
 //   node scripts/compare-pages.mjs --candidate https://<preview>.workers.dev
 //   node scripts/compare-pages.mjs --candidate http://127.0.0.1:8787 \
 //     --reference https://www.ericcecchi.com \
-//     --ignore '^(What this site collects|This site runs no analytics)'
+//     --ignore 'What this site collects|This site runs no analytics'
 //
-// --ignore takes a regular expression: visible-text lines that match it on
-// either side are left out of the text comparison and listed once at the end,
-// for a change the PR makes on purpose (the footer's analytics line, here).
+// --ignore takes text prefixes separated by '|': visible-text lines that start
+// with one, on either side, are left out of the text comparison and listed
+// once at the end, for a change the PR makes on purpose (the footer's
+// analytics line, here).
 //
 // It reads the HTML each server sends (what a crawler sees), not the page after
 // scripts run. The URL list is the reference's sitemap.xml. Exit code 1 if any
@@ -28,8 +29,9 @@ const reference = arg('reference', 'https://www.ericcecchi.com').replace(
   '',
 );
 const candidate = arg('candidate', '').replace(/\/$/, '');
-const ignoreSource = arg('ignore', '');
-const ignore = ignoreSource ? new RegExp(ignoreSource) : null;
+// Plain text, not a regular expression: a line is left out when it starts
+// with any of the '|'-separated prefixes.
+const ignorePrefixes = arg('ignore', '').split('|').filter(Boolean);
 const ignored = new Set();
 if (!candidate) {
   console.error(
@@ -97,24 +99,34 @@ function headSignature(html) {
   return [...new Set(kept)].sort();
 }
 
+// Repeats a replacement until the string stops changing, so a removal can't
+// leave behind a new match (for example a tag split around a comment).
+function replaceAll(value, pattern, replacement) {
+  let previous;
+  do {
+    previous = value;
+    value = value.replace(pattern, replacement);
+  } while (value !== previous);
+  return value;
+}
+
+// The text is only compared and printed to a terminal, never put into a page.
 function visibleText(html) {
-  const body = html.slice(html.indexOf('<body'));
-  return decode(
-    body
-      .replace(/<script\b[\s\S]*?<\/script>/g, ' ')
-      .replace(/<style\b[\s\S]*?<\/style>/g, ' ')
-      .replace(/<!--[\s\S]*?-->/g, '')
-      .replace(
-        /<(p|div|h[1-6]|li|header|footer|section|article|nav|br)\b[^>]*>/g,
-        '\n',
-      )
-      .replace(/<[^>]+>/g, ''),
-  )
+  let body = html.slice(html.toLowerCase().indexOf('<body'));
+  body = replaceAll(body, /<script\b[\s\S]*?<\/script\s*>/gi, ' ');
+  body = replaceAll(body, /<style\b[\s\S]*?<\/style\s*>/gi, ' ');
+  body = replaceAll(body, /<!--[\s\S]*?--!?>/g, '');
+  body = body.replace(
+    /<(p|div|h[1-6]|li|header|footer|section|article|nav|br)\b[^>]*>/gi,
+    '\n',
+  );
+  body = replaceAll(body, /<[^>]*>/g, '');
+  return decode(body)
     .split('\n')
     .map((l) => l.replace(/\s+/g, ' ').trim())
     .filter(Boolean)
     .filter((l) => {
-      if (ignore && ignore.test(l)) {
+      if (ignorePrefixes.some((prefix) => l.startsWith(prefix))) {
         ignored.add(l);
         return false;
       }
@@ -129,11 +141,18 @@ function diff(a, b) {
 }
 
 async function get(url) {
-  const res = await fetch(url, { redirect: 'manual' });
+  const res = await fetch(url, {
+    redirect: 'manual',
+    signal: AbortSignal.timeout(30000),
+  });
   return { status: res.status, html: await res.text() };
 }
 
-const sitemap = await (await fetch(`${reference}/sitemap.xml`)).text();
+const sitemap = await (
+  await fetch(`${reference}/sitemap.xml`, {
+    signal: AbortSignal.timeout(30000),
+  })
+).text();
 const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
   (m) => new URL(m[1]).pathname,
 );
