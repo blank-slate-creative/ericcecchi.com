@@ -1,7 +1,7 @@
 import { getPostExcerpts } from '~/lib/posts.server';
 import { ORIGIN } from '~/lib/seo';
 
-const STATIC_PATHS = ['/', '/work', '/blog'];
+const STATIC_PATHS = ['/', '/work', '/security', '/blog'];
 
 async function getPostPaths() {
   try {
