@@ -64,6 +64,9 @@ the switch: empty means no beacon, and the footer's line in `app/components/page
   pull request. That isn't connected yet; connecting it is milestone M2 (blank-slate issue 1616), and
   until then the Worker is deployed by hand with `npx wrangler deploy`. `vercel.json` turns off Vercel's
   Git deployments.
+- `www.ericcecchi.com` is the Worker's Custom Domain (`routes` in `wrangler.jsonc`). A deploy of that file
+  attaches the domain, and it fails while a DNS CNAME for `www` exists, so don't remove or edit the entry
+  outside a cutover or rollback (blank-slate issue 1617).
 
 ## Develop
 
