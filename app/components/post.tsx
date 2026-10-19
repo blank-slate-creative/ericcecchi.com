@@ -3,8 +3,8 @@ import { PageTitle } from './page-title';
 import { MDXRemote } from 'next-mdx-remote';
 import { Avatar } from './avatar';
 import { FormattedDate } from './formatted-date';
-import { loader } from '~/routes/blog_.$slug';
-import { useLoaderData } from '@remix-run/react';
+import { loader } from '~/post-page';
+import { useLoaderData } from 'react-router';
 
 export function Post({
   post,

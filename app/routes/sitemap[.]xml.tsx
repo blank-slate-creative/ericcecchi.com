@@ -3,16 +3,11 @@ import { ORIGIN } from '~/lib/seo';
 
 const STATIC_PATHS = ['/', '/work', '/security', '/blog'];
 
+// Pre-rendered at build time to build/client/sitemap.xml. Posts are in the
+// bundle, so a failure here fails the build instead of dropping posts.
 async function getPostPaths() {
-  try {
-    const posts = await getPostExcerpts();
-    return posts.map((post) => `/blog/${post.slug}`);
-  } catch (error) {
-    // A database outage must not turn the sitemap into a 500. Serve the
-    // static pages; the posts come back on the next successful read.
-    console.error('sitemap: could not read posts', error);
-    return [];
-  }
+  const posts = await getPostExcerpts();
+  return posts.map((post) => `/blog/${post.slug}`);
 }
 
 function escapeXml(value: string) {
@@ -34,9 +29,6 @@ ${urls}
 `;
 
   return new Response(body, {
-    headers: {
-      'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=0, s-maxage=3600',
-    },
+    headers: { 'Content-Type': 'application/xml; charset=utf-8' },
   });
 }

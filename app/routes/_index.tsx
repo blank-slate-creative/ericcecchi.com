@@ -1,10 +1,10 @@
-import type { MetaFunction } from '@vercel/remix';
+import type { MetaFunction } from 'react-router';
 import { Avatar } from '~/components/avatar';
 import { Anchor } from '~/components/anchor';
 import { JsonLd } from '~/components/json-ld';
 import Page from '~/components/page';
 import { PageTitle } from '~/components/page-title';
-import { cachedPageHeaders, pageMeta, profilePageLd } from '~/lib/seo';
+import { pageMeta, profilePageLd } from '~/lib/seo';
 
 export const meta: MetaFunction = () =>
   pageMeta({
@@ -14,8 +14,6 @@ export const meta: MetaFunction = () =>
     path: '/',
     type: 'profile',
   });
-
-export const headers = cachedPageHeaders;
 
 export default function Home() {
   return (

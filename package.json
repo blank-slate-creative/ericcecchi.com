@@ -5,12 +5,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "remix vite:dev",
-    "build": "remix vite:build",
+    "dev": "react-router dev",
+    "build": "react-router build && node scripts/postbuild.mjs",
+    "start": "wrangler dev",
     "lint": "prettier \"**/*.{js,ts,jsx,tsx}\" --write",
     "prettier": "prettier --single-quote --write",
     "test": "npm run lint",
-    "typecheck": "tsc"
+    "typecheck": "react-router typegen && tsc"
   },
   "prettier": {
     "singleQuote": true,
@@ -30,21 +31,17 @@
   "dependencies": {
     "@mdx-js/react": "^3.0.1",
     "@radix-ui/react-icons": "^1.3.0",
-    "@remix-run/node": "2.16.7",
-    "@remix-run/react": "2.16.7",
-    "@remix-run/serve": "2.16.7",
-    "@vercel/analytics": "^1.3.2",
-    "@vercel/remix": "2.16.7",
-    "@vercel/speed-insights": "^1.0.12",
+    "@react-router/node": "7.18.4",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "gray-matter": "^4.0.3",
-    "isbot": "^4.4.0",
+    "isbot": "^5.1.11",
     "mermaid": "^11.3.0",
     "next-mdx-remote": "^6.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router": "7.18.4",
     "reading-time": "^1.5.0",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-highlight": "^7.0.1",
@@ -58,7 +55,8 @@
   "devDependencies": {
     "@eslint/js": "^9.12.0",
     "@mdx-js/rollup": "^3.1.0",
-    "@remix-run/dev": "2.16.7",
+    "@react-router/dev": "7.18.4",
+    "@react-router/fs-routes": "7.18.4",
     "@types/node": "^22.7.5",
     "@types/react": "^18.3.11",
     "autoprefixer": "^10.4.20",
@@ -69,6 +67,7 @@
     "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.9.0",
-    "vite": "^5.4.10"
+    "vite": "^5.4.10",
+    "wrangler": "^4.151.1"
   }
 }

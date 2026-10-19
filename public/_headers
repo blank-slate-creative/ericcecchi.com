@@ -1,0 +1,11 @@
+# Cloudflare Workers static assets read this file from the served directory
+# (build/client) and add these headers to matching responses.
+# https://developers.cloudflare.com/workers/static-assets/headers/
+#
+# HSTS on every response, at the value Vercel sent before the move.
+/*
+  Strict-Transport-Security: max-age=63072000
+# Vite's build output: each file name carries a content hash, so a file never
+# changes once deployed.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

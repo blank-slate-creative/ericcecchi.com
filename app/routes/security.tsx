@@ -1,8 +1,8 @@
-import type { MetaFunction } from '@vercel/remix';
+import type { MetaFunction } from 'react-router';
 import { Anchor } from '~/components/anchor';
 import { Page } from '~/components/page';
 import { PageTitle } from '~/components/page-title';
-import { cachedPageHeaders, pageMeta } from '~/lib/seo';
+import { pageMeta } from '~/lib/seo';
 
 /*
  * /security (blank-slate issue 929, phase 2 of the ericcecchi.com refresh,
@@ -25,8 +25,6 @@ export const meta: MetaFunction = () =>
       'I lead security engineering and run Blank Slate Creative, a practice that writes security policies, SOC 2 readiness documentation, and questionnaire answers.',
     path: '/security',
   });
-
-export const headers = cachedPageHeaders;
 
 const guides = [
   {

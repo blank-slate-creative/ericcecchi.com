@@ -1,12 +1,12 @@
-import type { MetaFunction } from '@vercel/remix';
+import type { MetaFunction } from 'react-router';
 import { Page } from '~/components/page';
 import { PageTitle } from '~/components/page-title';
 import { FormattedDate } from '~/components/formatted-date';
 import { Card } from '~/components/card';
 import { Anchor } from '~/components/anchor';
-import { useLoaderData } from '@remix-run/react';
+import { useLoaderData } from 'react-router';
 import { getPostExcerpts } from '~/lib/posts.server';
-import { cachedPageHeaders, pageMeta } from '~/lib/seo';
+import { pageMeta } from '~/lib/seo';
 
 export const meta: MetaFunction = () =>
   pageMeta({
@@ -15,8 +15,6 @@ export const meta: MetaFunction = () =>
       'Posts by Eric Cecchi on web development, React, and engineering work.',
     path: '/blog',
   });
-
-export const headers = cachedPageHeaders;
 
 export default function Blog() {
   const { posts } = useLoaderData<typeof loader>();

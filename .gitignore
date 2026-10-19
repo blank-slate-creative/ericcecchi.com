@@ -3,4 +3,6 @@ node_modules
 /build
 .env
 .vercel
+.react-router/
+.wrangler/
 *.tsbuildinfo
