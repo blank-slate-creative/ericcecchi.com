@@ -48,7 +48,7 @@
     "remark-capitalize": "^1.1.0",
     "remark-code-titles": "^0.1.2",
     "remark-gfm": "^4.0.0",
-    "remark-smartypants": "^2.0.0",
+    "remark-smartypants": "^3.0.3",
     "tailwind-merge": "^2.5.4",
     "vite-tsconfig-paths": "^5.0.1"
   },
