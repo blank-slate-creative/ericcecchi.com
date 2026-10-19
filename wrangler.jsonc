@@ -20,8 +20,14 @@
     // file. scripts/postbuild.mjs writes it from the catch-all route.
     "not_found_handling": "404-page"
   },
-  // No routes yet. www.ericcecchi.com is attached as a Custom Domain at the DNS
-  // cutover (milestone M3), once its Vercel CNAME is gone.
+  // The DNS cutover (milestone M3, blank-slate issue 1617). A deploy of this
+  // file attaches www.ericcecchi.com to the Worker as a Custom Domain: it
+  // creates the DNS record and an Advanced Certificate, and it fails while the
+  // old Vercel CNAME for www still exists. So this entry is deployed only at
+  // the cutover, by hand, right after that CNAME is deleted (plan section 6).
+  // The apex is not listed here: a proxied placeholder A record and a zone
+  // redirect rule send ericcecchi.com to www.
+  "routes": [{ "pattern": "www.ericcecchi.com", "custom_domain": true }],
   "workers_dev": true,
   "preview_urls": true,
   // Required by `wrangler preview`, the PR preview deploy command (may be empty).
