@@ -57,7 +57,7 @@
     "@mdx-js/rollup": "^3.1.0",
     "@react-router/dev": "7.18.4",
     "@react-router/fs-routes": "7.18.4",
-    "@types/node": "^22.7.5",
+    "@types/node": "^26.6.5",
     "@types/react": "^18.3.11",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.12.0",
