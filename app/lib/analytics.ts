@@ -13,7 +13,7 @@
  * The token is public by design: it sits in the page source of every site that
  * uses Cloudflare Web Analytics, so it is not a secret.
  */
-export const CF_BEACON_TOKEN = '';
+export const CF_BEACON_TOKEN = 'a2d8c45a59fc42eeb7902645732edde0';
 
 /**
  * Only these hosts report. The same files are served from the workers.dev
