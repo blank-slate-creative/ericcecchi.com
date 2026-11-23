@@ -6,6 +6,8 @@
 // Static asset requests are free and unlimited on the Free plan, and they
 // don't count toward the account's 100,000 Worker requests a day, which
 // blankslate.biz shares.
+//
+// Probe for blank-slate issue 1616: a comment-only line, to prove PR branch builds.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "ericcecchi-com",
